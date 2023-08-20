@@ -20,8 +20,8 @@ class CrowdHumanFisheye(GenericDataset):
     cat_ids = {1: 1}
 
     def __init__(self, opt, split):
-        img_dir = ''
-        ann_path = ''
+        img_dir = '/content/Images'
+        ann_path = '/content/annotations/CrowdHuman_train.json'
 
         super().__init__(opt, split, ann_path, img_dir)
 

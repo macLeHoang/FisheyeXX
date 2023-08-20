@@ -134,3 +134,24 @@ class DCNv2(nn.Module):
         std = 1.0 / math.sqrt(fan_in)
         self.weight.data.uniform_(-std, std)
         self.bias.data.zero_()
+
+dcn_v2_conv = torchvision.ops.deform_conv2d
+
+class DCN_TraDeS(DCNv2):
+    def __init__(self, in_channels, out_channels,
+                 kernel_size, stride, padding,
+                 dilation=1, deformable_groups=1):
+        super(DCN_TraDeS, self).__init__(in_channels, out_channels,
+                                       kernel_size, stride, padding, dilation, deformable_groups)
+
+    def forward(self, input_feat, offset, mask):
+        assert 2 * self.deformable_groups * self.kernel_size[0] * self.kernel_size[1] == \
+               offset.shape[1]
+        assert self.deformable_groups * self.kernel_size[0] * self.kernel_size[1] == \
+               mask.shape[1]
+        return dcn_v2_conv(input_feat, offset, mask,
+                           self.weight, self.bias,
+                           self.stride,
+                           self.padding,
+                           self.dilation,
+                           self.deformable_groups)

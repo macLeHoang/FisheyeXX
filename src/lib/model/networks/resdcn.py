@@ -17,7 +17,7 @@ import torch
 import torch.nn as nn
 
 try:
-  from .DCNv2.dcn_v2 import DCN
+  from .DCNv2.dcn_v2 import DCNv2 as DCN
 except:
   print('Import DCN failed')
   DCN = None

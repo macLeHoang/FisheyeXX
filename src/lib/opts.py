@@ -357,12 +357,16 @@ class opts(object):
     # log dirs
     if opt.fisheye and opt.fisheye_saveroot != '':
       opt.root_dir = opt.fisheye_saveroot
+      opt.data_dir = os.path.join(opt.root_dir, 'data')
+      opt.exp_dir = os.path.join(opt.root_dir, 'exp', opt.task)
+      opt.save_dir = opt.exp_dir
+      opt.debug_dir = os.path.join(opt.save_dir, 'debug')
     else:
       opt.root_dir = os.path.join(os.path.dirname(__file__), '..', '..')
-    opt.data_dir = os.path.join(opt.root_dir, 'data')
-    opt.exp_dir = os.path.join(opt.root_dir, 'exp', opt.task)
-    opt.save_dir = os.path.join(opt.exp_dir, opt.exp_id)
-    opt.debug_dir = os.path.join(opt.save_dir, 'debug')
+      opt.data_dir = os.path.join(opt.root_dir, 'data')
+      opt.exp_dir = os.path.join(opt.root_dir, 'exp', opt.task)
+      opt.save_dir = os.path.join(opt.exp_dir, opt.exp_id)
+      opt.debug_dir = os.path.join(opt.save_dir, 'debug')
     
     if opt.resume and opt.load_model == '':
       opt.load_model = os.path.join(opt.save_dir, 'model_last.pth')

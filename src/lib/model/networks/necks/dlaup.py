@@ -14,7 +14,7 @@ import torch.nn.functional as F
 import torch.utils.model_zoo as model_zoo
 
 try:
-  from ..DCNv2.dcn_v2 import DCN
+  from ..DCNv2.dcn_v2 import DCNv2 as DCN
 except:
   print('import DCN failed')
   DCN = None
