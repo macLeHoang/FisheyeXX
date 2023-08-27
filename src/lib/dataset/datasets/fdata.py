@@ -24,7 +24,7 @@ class FisheyeDataset(GenericDataset):
         # Load annotations
         # data_dir = os.path.join(opt.data_dir, '')
         img_dir = '/content/DATA'
-        ann_path = '/content/gdrive/MyDrive/Fisheye/config.yaml'
+        ann_path = '/content/gdrive/MyDrive/Fisheye/dataset/config.yaml'
 
         super(FisheyeDataset, self).__init__(opt, split, ann_path, img_dir)
 

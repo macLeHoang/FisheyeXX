@@ -51,6 +51,7 @@ class fDetectDataset(torch.utils.data.Dataset):
             img_path = os.path.join(self.img_dir, img_info['file_name'])
         else:
             img_id = self.images[index]
+            img_info = self.load_image_func(imgIds=[img_id])[0]
             root = img_info['root']
             folder = img_info['folder']
             name = img_info['file_name']
@@ -78,22 +79,19 @@ class fDetectDataset(torch.utils.data.Dataset):
                            rand_rot_test=False,
                            test_rand_scale=False):
         '''Load img and anns for testing 
-           :Parameters
-           ----------- 
-                rand_rot_test: Optional, default=False
-                    Random rotation testing
-                test_rand_scale: Not supported yet
-                    Multi scales testing
+           Arguments: 
+                - random rotating: Optional
+                - multi scale testing: Not support yet
         '''
         if rand_rot_test:
             h, w = img.shape[:2]
             rot = np.random.randint(-180, 180)
             if expand:
                 new_w, new_h = self._new_rotated_wh(rot, w, h)
-                translate_mat = np.array([[1, 0, (new_w-w)//2], [0, 1, (new_h-h)//2]])
+                translate_mat = np.array([[1., 0., (new_w-w)//2], [0., 1., (new_h-h)//2]])
             else:
                 new_w, new_h = w, h
-                translate_mat = np.array([[1, 0, 0], [0, 1, 0]])
+                translate_mat = np.array([[1., 0., 0.], [0., 1., 0.]])
 
             scale = np.random.choice(np.arange(0.6, 1.4, 0.1)) if self.opt.rand_scale_test else 1
             rot_mat = cv.getRotationMatrix2D((new_w/2, new_h/2), rot, scale)
